@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>how_to_develop("software");</title>
+  <title>Hibernate: how to get all table names in Table-per-subclass hierarchy - how_to_develop("software");</title>
   <meta name="author" content="Natasha Ruby">
 
   
-  <meta name="description" content="I just encountered this problem when uploading product images.
-The issue takes place even when I do rake paperclip:refresh:thumbnails CLASS=Spree:: &hellip;">
+  <meta name="description" content="Hello! Sometimes Hibernate developer may need to get all table names for all existing mappings. (For example, it is neccessary to check that tables &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ The issue takes place even when I do rake paperclip:refresh:thumbnails CLASS=Spr
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://howtodevelop.github.io">
+  <link rel="canonical" href="http://howtodevelop.github.io/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="how_to_develop("software");" type="application/atom+xml">
@@ -76,76 +75,12 @@ The issue takes place even when I do rake paperclip:refresh:thumbnails CLASS=Spr
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload/">Spree Commerce: Images Become Dark and Over-contrasted After Upload</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-15T21:23:00+04:00" pubdate data-updated="true">15/11/2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I just encountered this problem when uploading product images.
-The issue takes place even when I do <code>rake paperclip:refresh:thumbnails CLASS=Spree::Image</code>.</p>
-
-<p>So image become darker and overcontrasted as following:
-<img src="/assets/images/spree_darkened_image.jpg" alt="" /></p>
-
-<p>It happens because of the way ImageMagick works with RGB colorspace (in my case, the ImageMagick version is <code>8:6.7.7.10-5ubuntu2.1</code>)</p>
-
-<h2>So how to work around of this in Spree Commerce application</h2>
-
-<p>Just create a file <code>%app_root%/app/models/spree/image_decorator.rb</code> and place the following content into it:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Spree</span>
-</span><span class='line'>  <span class="no">Image</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
-</span><span class='line'>    <span class="ss">Spree</span><span class="p">:</span><span class="ss">:Image</span><span class="o">.</span><span class="n">attachment_definitions</span><span class="o">[</span><span class="ss">:attachment</span><span class="o">][</span><span class="ss">:convert_options</span><span class="o">]</span> <span class="o">=</span>  <span class="p">{</span> <span class="ss">all</span><span class="p">:</span> <span class="s1">&#39;-strip -auto-orient -colorspace sRGB&#39;</span> <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That&rsquo;s it! Image colors are no longer corrupt.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy/">Hibernate: How to Get All Table Names in Table-per-subclass Hierarchy</a></h1>
+      <h1 class="entry-title">Hibernate: How to Get All Table Names in Table-per-subclass Hierarchy</h1>
     
     
       <p class="meta">
@@ -168,7 +103,7 @@ The issue takes place even when I do <code>rake paperclip:refresh:thumbnails CLA
   </header>
 
 
-  <div class="entry-content"><p>Hello!</p>
+<div class="entry-content"><p>Hello!</p>
 
 <p>Sometimes Hibernate developer may need to get all table names for all existing mappings. (For example, it is neccessary to check that tables for mappings going to be created are not present yet.)
 There is no problem to do this when <strong>Table-per-class</strong> strategy used:</p>
@@ -237,65 +172,16 @@ There is no problem to do this when <strong>Table-per-class</strong> strategy us
 
 <p>Using this approach we iterate over all superclass tables for each class.</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/09/how-to-deploy-octopress-to-appfog/">How to Deploy Octopress to Appfog</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Natasha Ruby</span></span>
 
-<time datetime="2013-11-09T12:57:00+04:00" pubdate data-updated="true">09/11/2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="/blog/2013/11/09/kak-zadeploit-octopress-na-appfog/">Read this page in Russian (Прочитать заметку по-русски)</a></p>
-
-<p>Do you have an account at Appfog? If no, visit <a href="http://appfog.com">http://appfog.com</a></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/11/09/how-to-deploy-octopress-to-appfog/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/09/kak-zadeploit-octopress-na-appfog/">Как задеплоить Octopress на Appfog</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -307,142 +193,46 @@ There is no problem to do this when <strong>Table-per-class</strong> strategy us
   
 
 
-<time datetime="2013-11-09T12:11:00+04:00" pubdate data-updated="true">09/11/2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="/blog/2013/11/09/how-to-deploy-octopress-to-appfog/">Read this page in English</a></p>
-
-<p>Вы уже зарегистрированы в Appfog? Если нет, то вперед: <a href="http://appfog.com">http://appfog.com</a></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/11/09/kak-zadeploit-octopress-na-appfog/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2013-11-14T22:23:00+04:00" pubdate data-updated="true">14/11/2013</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/09/kak-pisat-posty-zapisy-v-octopress/">Как писать посты (записи) в Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/hibernate/'>Hibernate</a>, <a class='category' href='/blog/categories/in-english/'>In English</a>, <a class='category' href='/blog/categories/java/'>Java</a>
+  
+</span>
 
 
-<time datetime="2013-11-09T11:20:00+04:00" pubdate data-updated="true">09/11/2013</time>
-        
-      </p>
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>Ну что ж, если вы уже <a href="http://how-to-develop.com/blog/2013/11/09/kak-ustanovit-octopress/">установили Octopress,</a> то можно приступать непосредственно к блоггингу.</p>
-
-<p>Данная заметка является краткой выдержкой из официального руководства, изложенной на великом и могучем.
-Полная статья на сайте Octopress: <a href="http://octopress.org/docs/blogging/">Blogging Basics</a>.</p>
-
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://howtodevelop.github.io/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy/" data-via="howtodevelop" data-counturl="http://howtodevelop.github.io/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/11/09/kak-pisat-posty-zapisy-v-octopress/">Read on &rarr;</a>
-    </footer>
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/09/kak-ustanovit-octopress/">Как установить Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
+        <a class="basic-alignment left" href="/blog/2013/11/09/how-to-deploy-octopress-to-appfog/" title="Previous Post: How to deploy Octopress to Appfog">&laquo; How to deploy Octopress to Appfog</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload/" title="Next Post: Spree Commerce: images become dark and over-contrasted after upload">Spree Commerce: images become dark and over-contrasted after upload &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-09T10:06:00+04:00" pubdate data-updated="true">09/11/2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Особенности Octopress</h2>
-
-<p><a href="http://octopress.org/">Octopress</a> &ndash; это наиболее популярный движок блога на Ruby на сегодняшний день. Он примечателен и замечателен тем, что сайты на нем являются полностью статичными: все записи хранятся в файлах, база данных не используется совсем, а это значит, что такой блог может быть размещен на бесплатных хостингах вроде <a href="http://pages.github.com">GitHub Pages</a> (при этом используя свой собственный домен), или же просто не отяготит ваш основной хостинг своим присутствием. За генерацию статичных страниц ответственен движок Jekyll и, надо сказать, со своей задачей от справляется на &ldquo;ура&rdquo;.</p>
-
-<h2>Установка Octopress</h2>
-
-<ol>
-<li>Убедитесь, что у вас установлен <a href="http://git-scm.com">Git</a>.</li>
-<li>Для работы Octopress <strong>нужен Ruby версии не ниже 1.9.3</strong>. Если нет &ndash; устанавливаем.</li>
-<li>Клонируем репозиторий:</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/imathis/octopress.git octopress</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-4. Заходим в директорию, устанавливаем зависимости и тему по-умолчанию:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd octopress
-</span><span class='line'>bundle install
-</span><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Готово! Вы восхитительны!</p>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  
-  
+  </section>
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -478,6 +268,7 @@ There is no problem to do this when <strong>Table-per-class</strong> strategy us
 
   
 </aside>
+
 
     </div>
   </div>
@@ -521,7 +312,10 @@ There is no problem to do this when <strong>Table-per-class</strong> strategy us
       var disqus_shortname = 'howtodevelopsoftware';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://howtodevelop.github.io/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy/';
+        var disqus_url = 'http://howtodevelop.github.io/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Программирование | how_to_develop("software");]]></title>
+  <link href="http://howtodevelop.github.io/blog/categories/proghrammirovaniie/atom.xml" rel="self"/>
+  <link href="http://howtodevelop.github.io/"/>
+  <updated>2013-12-03T23:41:13+04:00</updated>
+  <id>http://howtodevelop.github.io/</id>
+  <author>
+    <name><![CDATA[Natasha Ruby]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Как установить Octopress]]></title>
+    <link href="http://howtodevelop.github.io/blog/2013/11/09/kak-ustanovit-octopress/"/>
+    <updated>2013-11-09T10:06:00+04:00</updated>
+    <id>http://howtodevelop.github.io/blog/2013/11/09/kak-ustanovit-octopress</id>
+    <content type="html"><![CDATA[<h2>Особенности Octopress</h2>
+
+<p><a href="http://octopress.org/">Octopress</a> &ndash; это наиболее популярный движок блога на Ruby на сегодняшний день. Он примечателен и замечателен тем, что сайты на нем являются полностью статичными: все записи хранятся в файлах, база данных не используется совсем, а это значит, что такой блог может быть размещен на бесплатных хостингах вроде <a href="http://pages.github.com">GitHub Pages</a> (при этом используя свой собственный домен), или же просто не отяготит ваш основной хостинг своим присутствием. За генерацию статичных страниц ответственен движок Jekyll и, надо сказать, со своей задачей от справляется на &ldquo;ура&rdquo;.</p>
+
+<h2>Установка Octopress</h2>
+
+<ol>
+<li>Убедитесь, что у вас установлен <a href="http://git-scm.com">Git</a>.</li>
+<li>Для работы Octopress <strong>нужен Ruby версии не ниже 1.9.3</strong>. Если нет &ndash; устанавливаем.</li>
+<li>Клонируем репозиторий:
+<code>
+git clone git://github.com/imathis/octopress.git octopress
+</code></li>
+<li>Заходим в директорию, устанавливаем зависимости и тему по-умолчанию:
+<code>
+cd octopress
+bundle install
+rake install
+</code></li>
+</ol>
+
+
+<p>Готово! Вы восхитительны!</p>
+]]></content>
+  </entry>
+  
+</feed>

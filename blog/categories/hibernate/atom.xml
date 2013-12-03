@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hibernate | how_to_develop("software");]]></title>
+  <link href="http://howtodevelop.github.io/blog/categories/hibernate/atom.xml" rel="self"/>
+  <link href="http://howtodevelop.github.io/"/>
+  <updated>2013-12-03T23:41:13+04:00</updated>
+  <id>http://howtodevelop.github.io/</id>
+  <author>
+    <name><![CDATA[Natasha Ruby]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hibernate: how to get all table names in Table-per-subclass hierarchy]]></title>
+    <link href="http://howtodevelop.github.io/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy/"/>
+    <updated>2013-11-14T22:23:00+04:00</updated>
+    <id>http://howtodevelop.github.io/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy</id>
+    <content type="html"><![CDATA[<p>Hello!</p>
+
+<p>Sometimes Hibernate developer may need to get all table names for all existing mappings. (For example, it is neccessary to check that tables for mappings going to be created are not present yet.)
+There is no problem to do this when <strong>Table-per-class</strong> strategy used:</p>
+
+<p>``` java
+final Set<String> tables = new HashSet<String>();
+Map m = sessionFactory.getAllClassMetadata();
+for (Object value : m.values()) {</p>
+
+<pre><code>AbstractEntityPersister abstractEntityPersister = (value) value;
+tables.add(abstractEntityPersister.getTableName()); 
+</code></pre>
+
+<p>}
+return tables;
+```</p>
+
+<p>But if one try this approach on <strong>Table-per-subclass</strong> hierarchy, only most common tables for deepest superclasses for each mapping will be returned.</p>
+
+<p>To work around this following solution can be used:</p>
+
+<p>``` java</p>
+
+<pre><code>public Set&lt;String&gt; getAllTables(LocalSessionFactoryBean localSessionFactoryBean) {
+    final Set&lt;String&gt; tables = new HashSet&lt;String&gt;();
+
+    PersistentClass clazz;
+    @SuppressWarnings("unchecked")
+    final Iterator&lt;PersistentClass&gt; iterator = localSessionFactoryBean
+            .getConfiguration().getClassMappings();
+    while (iterator.hasNext()) {
+        clazz = iterator.next();
+        tables.add(clazz.getTable().getName());
+        @SuppressWarnings("unchecked")
+        final Iterator&lt;Join&gt; i = clazz.getJoinClosureIterator();
+        while (i.hasNext()) {
+            tables.add(i.next().getTable().getName());
+        }
+    }
+
+    return tables;
+}
+</code></pre>
+
+<p>```</p>
+
+<p>Using this approach we iterate over all superclass tables for each class.</p>
+]]></content>
+  </entry>
+  
+</feed>

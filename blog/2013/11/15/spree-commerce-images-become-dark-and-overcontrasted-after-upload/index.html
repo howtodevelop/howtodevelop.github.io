@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Spree Commerce: images become dark and over-contrasted after upload - how_to_develop("software");</title>
+  <meta name="author" content="Natasha Ruby">
+
+  
+  <meta name="description" content="I just encountered this problem when uploading product images.
+The issue takes place even when I do rake paperclip:refresh:thumbnails CLASS=Spree:: &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://howtodevelop.github.io/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="how_to_develop("software");" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-45583477-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">how_to_develop("software");</a></h1>
+  
+    <h2>Java, Ruby, Rails, JavaScript, HTML, CSS... // The place where programming tricks are revealed!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:howtodevelop.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Spree Commerce: Images Become Dark and Over-contrasted After Upload</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T21:23:00+04:00" pubdate data-updated="true">15/11/2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I just encountered this problem when uploading product images.
+The issue takes place even when I do <code>rake paperclip:refresh:thumbnails CLASS=Spree::Image</code>.</p>
+
+<p>So image become darker and overcontrasted as following:
+<img src="/assets/images/spree_darkened_image.jpg" alt="" /></p>
+
+<p>It happens because of the way ImageMagick works with RGB colorspace (in my case, the ImageMagick version is <code>8:6.7.7.10-5ubuntu2.1</code>)</p>
+
+<h2>So how to work around of this in Spree Commerce application</h2>
+
+<p>Just create a file <code>%app_root%/app/models/spree/image_decorator.rb</code> and place the following content into it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Spree</span>
+</span><span class='line'>  <span class="no">Image</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
+</span><span class='line'>    <span class="ss">Spree</span><span class="p">:</span><span class="ss">:Image</span><span class="o">.</span><span class="n">attachment_definitions</span><span class="o">[</span><span class="ss">:attachment</span><span class="o">][</span><span class="ss">:convert_options</span><span class="o">]</span> <span class="o">=</span>  <span class="p">{</span> <span class="ss">all</span><span class="p">:</span> <span class="s1">&#39;-strip -auto-orient -colorspace sRGB&#39;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s it! Image colors are no longer corrupt.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Natasha Ruby</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T21:23:00+04:00" pubdate data-updated="true">15/11/2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/imagemagick/'>ImageMagick</a>, <a class='category' href='/blog/categories/in-english/'>In English</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/spree-commerce/'>Spree Commerce</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://howtodevelop.github.io/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload/" data-via="howtodevelop" data-counturl="http://howtodevelop.github.io/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy/" title="Previous Post: Hibernate: how to get all table names in Table-per-subclass hierarchy">&laquo; Hibernate: how to get all table names in Table-per-subclass hierarchy</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload/">Spree Commerce: Images Become Dark and Over-contrasted After Upload</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/14/hibernate-how-to-get-all-table-names-in-table-per-subclass-hierarchy/">Hibernate: How to Get All Table Names in Table-per-subclass Hierarchy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/09/how-to-deploy-octopress-to-appfog/">How to Deploy Octopress to Appfog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/09/kak-zadeploit-octopress-na-appfog/">Как задеплоить Octopress на Appfog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/09/kak-pisat-posty-zapisy-v-octopress/">Как писать посты (записи) в Octopress</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Natasha Ruby -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter22865218 = new Ya.Metrika({id:22865218,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/22865218" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'howtodevelopsoftware';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://howtodevelop.github.io/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload/';
+        var disqus_url = 'http://howtodevelop.github.io/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

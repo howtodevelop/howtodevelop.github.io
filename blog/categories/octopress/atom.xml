@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | how_to_develop("software");]]></title>
+  <link href="http://howtodevelop.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://howtodevelop.github.io/"/>
+  <updated>2013-12-03T23:41:13+04:00</updated>
+  <id>http://howtodevelop.github.io/</id>
+  <author>
+    <name><![CDATA[Natasha Ruby]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to deploy Octopress to Appfog]]></title>
+    <link href="http://howtodevelop.github.io/blog/2013/11/09/how-to-deploy-octopress-to-appfog/"/>
+    <updated>2013-11-09T12:57:00+04:00</updated>
+    <id>http://howtodevelop.github.io/blog/2013/11/09/how-to-deploy-octopress-to-appfog</id>
+    <content type="html"><![CDATA[<p><a href="/blog/2013/11/09/kak-zadeploit-octopress-na-appfog/">Read this page in Russian (Прочитать заметку по-русски)</a></p>
+
+<p>Do you have an account at Appfog? If no, visit <a href="http://appfog.com">http://appfog.com</a></p>
+
+<!-- more -->
+
+
+<p></p>
+
+<h2>Appfog Console (AP CLI) installation</h2>
+
+<p>Appfog has a great manual for it: <a href="https://docs.appfog.com/getting-started/af-cli#installation">https://docs.appfog.com/getting-started/af-cli#installation</a></p>
+
+<h2>Deploy application</h2>
+
+<p>Nothing complex here.
+First at all, login to your af account:
+<code>
+af login
+</code></p>
+
+<p>After that perform a <code>push</code> for your application. <strong>Warning! Octopress won&rsquo;t work with Ruby version lower than 1.9.3. Be sure that you specified 1.9.3 runtime for you app. Read the following instructions to know how to do it.</strong></p>
+
+<p>How to deploy application called &ldquo;octopress&rdquo;:</p>
+
+<p><code>
+af push octopress --runtime ruby193
+af start
+</code></p>
+
+<h2>Update your application, upload you blog posts</h2>
+
+<p>If you already done <code>af push</code>, you just need to do <code>af update</code> everytime when you altering the contents of your blog:
+<code>
+af update
+</code></p>
+
+<h2>Possible problems</h2>
+
+<h3>An error occurred while installing rdiscount</h3>
+
+<p>The most possible cause is what your Ruby version is lower than 1.9.3. To resolve the issue perform new <code>af push</code> (see the instructions above)</p>
+
+<h4>The possible exception:</h4>
+
+<p>```
+Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.</p>
+
+<pre><code>   /usr/local/bin/ruby extconf.rb
+   checking for random()... yes
+   checking for srandom()... yes
+   checking for rand()... yes
+   checking for srand()... yes
+   checking size of unsigned long... long
+   checking size of unsigned int... int
+   no int with size 4
+   *** extconf.rb failed ***
+   Could not create Makefile due to some reason, probably lack of
+   necessary libraries and/or headers.  Check the mkmf.log file for more
+   details.  You may need configuration options.
+   Provided configuration options:
+   --with-opt-dir
+   --without-opt-dir
+   --with-opt-include
+   --without-opt-include=${opt-dir}/include
+   --with-opt-lib
+   --without-opt-lib=${opt-dir}/lib
+   --with-make-prog
+   --without-make-prog
+   --srcdir=.
+   --curdir
+   --ruby=/usr/local/bin/ruby
+   --with-rdiscount-dir
+   --without-rdiscount-dir
+   --with-rdiscount-include
+   --without-rdiscount-include=${rdiscount-dir}/include
+   --with-rdiscount-lib
+   --without-rdiscount-lib=${rdiscount-dir}/lib
+   Gem files will remain installed in /tmp/build_2dddf5mp2ptjr/vendor/bundle/ruby/1.9.1/gems/rdiscount-2.0.7.1 for inspection.
+   Results logged to /tmp/build_2dddf5mp2ptjr/vendor/bundle/ruby/1.9.1/gems/rdiscount-2.0.7.1/ext/gem_make.out
+   An error occurred while installing rdiscount (2.0.7.1), and Bundler cannot
+   continue.
+   Make sure that `gem install rdiscount -v '2.0.7.1'` succeeds before bundling.
+</code></pre>
+
+<p> !
+ !     Failed to install gems via Bundler.
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Как задеплоить Octopress на Appfog]]></title>
+    <link href="http://howtodevelop.github.io/blog/2013/11/09/kak-zadeploit-octopress-na-appfog/"/>
+    <updated>2013-11-09T12:11:00+04:00</updated>
+    <id>http://howtodevelop.github.io/blog/2013/11/09/kak-zadeploit-octopress-na-appfog</id>
+    <content type="html"><![CDATA[<p><a href="/blog/2013/11/09/how-to-deploy-octopress-to-appfog/">Read this page in English</a></p>
+
+<p>Вы уже зарегистрированы в Appfog? Если нет, то вперед: <a href="http://appfog.com">http://appfog.com</a></p>
+
+<!-- more -->
+
+
+<p></p>
+
+<h2>Установка Appfog Console (AP CLI)</h2>
+
+<p>У Appfog есть замечательная инструкция по инсталляции: <a href="https://docs.appfog.com/getting-started/af-cli#installation">https://docs.appfog.com/getting-started/af-cli#installation</a></p>
+
+<h2>Деплой приложения</h2>
+
+<p>Здесь ничего сложного.
+Сперва совершите вход, если не сделали этого ранее:
+<code>
+af login
+</code></p>
+
+<p>После чего сделайте push вашего приложения. <strong>Важно! Octopress не будет работать с Ruby версией ниже 1.9.3. Обратите внимание на указание необходимой версии Ruby.</strong></p>
+
+<p>Деплой приложения под названием octopress:</p>
+
+<p><code>
+af push octopress --runtime ruby193
+af start
+</code></p>
+
+<h2>Обновление приложения, загрузка записей</h2>
+
+<p>Если вы уже сделали <code>af push</code>, то вам остается всего лишь делать <code>af update</code> всякий раз, когда вы изменяете содержимое блога:
+<code>
+af update
+</code></p>
+
+<h2>Возможные ошибки</h2>
+
+<h3>An error occurred while installing rdiscount</h3>
+
+<p>Наиболее вероятно, что версия Ruby для вашего приложения ниже 1.9.3. Сделайте новый <code>af push</code> (как сделать &ndash; читайте выше)</p>
+
+<h4>Примерный текст ошибки:</h4>
+
+<p>```
+Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.</p>
+
+<pre><code>   /usr/local/bin/ruby extconf.rb
+   checking for random()... yes
+   checking for srandom()... yes
+   checking for rand()... yes
+   checking for srand()... yes
+   checking size of unsigned long... long
+   checking size of unsigned int... int
+   no int with size 4
+   *** extconf.rb failed ***
+   Could not create Makefile due to some reason, probably lack of
+   necessary libraries and/or headers.  Check the mkmf.log file for more
+   details.  You may need configuration options.
+   Provided configuration options:
+   --with-opt-dir
+   --without-opt-dir
+   --with-opt-include
+   --without-opt-include=${opt-dir}/include
+   --with-opt-lib
+   --without-opt-lib=${opt-dir}/lib
+   --with-make-prog
+   --without-make-prog
+   --srcdir=.
+   --curdir
+   --ruby=/usr/local/bin/ruby
+   --with-rdiscount-dir
+   --without-rdiscount-dir
+   --with-rdiscount-include
+   --without-rdiscount-include=${rdiscount-dir}/include
+   --with-rdiscount-lib
+   --without-rdiscount-lib=${rdiscount-dir}/lib
+   Gem files will remain installed in /tmp/build_2dddf5mp2ptjr/vendor/bundle/ruby/1.9.1/gems/rdiscount-2.0.7.1 for inspection.
+   Results logged to /tmp/build_2dddf5mp2ptjr/vendor/bundle/ruby/1.9.1/gems/rdiscount-2.0.7.1/ext/gem_make.out
+   An error occurred while installing rdiscount (2.0.7.1), and Bundler cannot
+   continue.
+   Make sure that `gem install rdiscount -v '2.0.7.1'` succeeds before bundling.
+</code></pre>
+
+<p> !
+ !     Failed to install gems via Bundler.
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Как писать посты (записи) в Octopress]]></title>
+    <link href="http://howtodevelop.github.io/blog/2013/11/09/kak-pisat-posty-zapisy-v-octopress/"/>
+    <updated>2013-11-09T11:20:00+04:00</updated>
+    <id>http://howtodevelop.github.io/blog/2013/11/09/kak-pisat-posty-zapisy-v-octopress</id>
+    <content type="html"><![CDATA[<p>Ну что ж, если вы уже <a href="http://how-to-develop.com/blog/2013/11/09/kak-ustanovit-octopress/">установили Octopress,</a> то можно приступать непосредственно к блоггингу.</p>
+
+<p>Данная заметка является краткой выдержкой из официального руководства, изложенной на великом и могучем.
+Полная статья на сайте Octopress: <a href="http://octopress.org/docs/blogging/">Blogging Basics</a>.</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<h2>Создаём пост на Octopress</h2>
+
+<p>В консоли выполняем:
+```
+rake new_post[&ldquo;How to blog in Octopress&rdquo;]</p>
+
+<h1>Создаст файл source/_posts/2013-11-09-how-to-blog-in-octopress.markdown</h1>
+
+<p><code>``
+Это и есть файл вашего поста, который должен содержать текст заметки в формате Markdown. После развертывания пост будет доступен по адресу</code><a href="http://your-domain.ru/blog/2013/11/09/how-to-blog-in-octopress/">http://your-domain.ru/blog/2013/11/09/how-to-blog-in-octopress/</a>`, таким образом вы можете представить себе будущий url записи.</p>
+
+<h3>Особенность русскоязычного блоггинга на Octopress:</h3>
+
+<p>Представим, что вы захотели написать пост на русском и с русским заголовком.
+Выполняем:
+```
+rake new_post[&ldquo;Как задеплоить Octopress на Appfog&rdquo;]</p>
+
+<h1>Создаст файл source/_posts/2013-11-09-kak-zadieploit'-octopress-na-appfog.markdown</h1>
+
+<p><code>
+Как мы видим, получилось не вполне корректное имя файла, а значит и будущий URL: вместо мягкого знака мы получили нежелательный апостроф, а буква "е" в слове "задеплоить" неожиданно превратилась в сочетание "ie", что, в частности, не является правильным вариантом транслитерации и может повлиять на поисковое продвижение (SEO). Поэтому я поступаю следующим образом: создаю запись, вручную указывая желаемый вариант транслитерации и будущего написания url, а после пишу красивый заголовок непосредственно в теле поста. Пример более правильного создания поста на русском языке:
+</code>
+rake new_post[&ldquo;kak-zadeploit-octopress-na-appfog&rdquo;]</p>
+
+<h1>Создаст файл source/_posts/2013-11-09-kak-zadeploit-octopress-na-appfog.markdown</h1>
+
+<p>```</p>
+
+<h3>Как удалить пост</h3>
+
+<p>В процессе наших экспериментов вы создали лишний пост с непривлекательным URL, содержащим апостроф и неправильную транслитерацию. Удалим его:
+<code>
+rm source/_posts/2013-11-09-kak-zadieploit'-octopress-na-appfog.markdown
+</code></p>
+
+<h2>Пишем наш пост</h2>
+
+<p>Первым делом открываем свежесозданный файл <code>source/_posts/2013-11-09-kak-zadeploit-octopress-na-appfog.markdown</code> в любом текстовом редакторе. Для большего удобства вы можете установить себе один из множества редакторов Markdown, но этот вопрос выходит за рамки нашей заметки.</p>
+
+<p>После открытия вы увидите следующее содержание:</p>
+
+<h2>```</h2>
+
+<p>layout: post
+title: &ldquo;kak-zadeploit-octopress-na-appfog&rdquo;
+date: 2013-11-09 11:20
+comments: true</p>
+
+<h2>categories: </h2>
+
+<p>```</p>
+
+<p>Я думаю, все параметры говорят сами за себя, я же остановлюсь только на двух из них:</p>
+
+<h3>Меняем <code>title</code></h3>
+
+<p>Мы сгенерировали пост с названием <code>"kak-zadeploit-octopress-na-appfog"</code>, которое теперь надо заменить на что-то более человекочитаемое. Напишем вместо этого: <code>"Как задеплоить Octopress на Appfog"</code></p>
+
+<h3>Добавляем категории</h3>
+
+<p>Если категория одна:
+<code>
+categories: Octopress
+</code></p>
+
+<p>Если категорий несколько:
+<code>
+categories: [Octopress, По-русски]
+</code></p>
+
+<h3>Пишем содержание</h3>
+
+<p>Представим, что наш пост должен содержать два подзаголовка, содержащих по абзацу.
+Добавляем следующую Markdown разметку в конец нашего файла:</p>
+
+<p>```</p>
+
+<h2>Установка Appfog Console (AP CLI)</h2>
+
+<p>Абзац отборных инструкций. Переходите на статью, чтобы ознакомиться :) Ссылка внизу!</p>
+
+<h2>Деплой приложения</h2>
+
+<p>Важнейшие инструкции для консоли. Не выполняйте их, пожалуйста.
+&zwnj;<code>
+&amp;zwnj;cd octopress
+&amp;zwnj;rm -rf /source
+&amp;zwnj;</code></p>
+
+<p>```</p>
+
+<h3>Генерируем пост на Octopress</h3>
+
+<p><code>
+rake generate
+</code>
+Вуаля!</p>
+
+<h3>Запускаем Octopress локально</h3>
+
+<p><code>
+rake preview
+</code>
+Вуаля! Замечу, что не обязательно предварительно выполнять <code>rake generate</code> &ndash; здесь он выполнится автоматически.
+Запущенный Octopress доступен по адресу <code>http://localhost:4000</code></p>
+
+<h3>Что получилось</h3>
+
+<p>А получилась примерно такая картина:</p>
+
+<p><img src="/assets/images/how-to-deploy.png"></p>
+
+<h3>Что ещё</h3>
+
+<p>Если вы надумали использовать ваш аккаунт Appfog для развертывания блога, милости прошу: <a href="/blog/2013/11/09/kak-zadeploit-octopress-na-appfog/">Как задеплоить Octopress на Appfog</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Как установить Octopress]]></title>
+    <link href="http://howtodevelop.github.io/blog/2013/11/09/kak-ustanovit-octopress/"/>
+    <updated>2013-11-09T10:06:00+04:00</updated>
+    <id>http://howtodevelop.github.io/blog/2013/11/09/kak-ustanovit-octopress</id>
+    <content type="html"><![CDATA[<h2>Особенности Octopress</h2>
+
+<p><a href="http://octopress.org/">Octopress</a> &ndash; это наиболее популярный движок блога на Ruby на сегодняшний день. Он примечателен и замечателен тем, что сайты на нем являются полностью статичными: все записи хранятся в файлах, база данных не используется совсем, а это значит, что такой блог может быть размещен на бесплатных хостингах вроде <a href="http://pages.github.com">GitHub Pages</a> (при этом используя свой собственный домен), или же просто не отяготит ваш основной хостинг своим присутствием. За генерацию статичных страниц ответственен движок Jekyll и, надо сказать, со своей задачей от справляется на &ldquo;ура&rdquo;.</p>
+
+<h2>Установка Octopress</h2>
+
+<ol>
+<li>Убедитесь, что у вас установлен <a href="http://git-scm.com">Git</a>.</li>
+<li>Для работы Octopress <strong>нужен Ruby версии не ниже 1.9.3</strong>. Если нет &ndash; устанавливаем.</li>
+<li>Клонируем репозиторий:
+<code>
+git clone git://github.com/imathis/octopress.git octopress
+</code></li>
+<li>Заходим в директорию, устанавливаем зависимости и тему по-умолчанию:
+<code>
+cd octopress
+bundle install
+rake install
+</code></li>
+</ol>
+
+
+<p>Готово! Вы восхитительны!</p>
+]]></content>
+  </entry>
+  
+</feed>

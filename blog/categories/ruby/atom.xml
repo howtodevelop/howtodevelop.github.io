@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby | how_to_develop("software");]]></title>
+  <link href="http://howtodevelop.github.io/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://howtodevelop.github.io/"/>
+  <updated>2013-12-03T23:41:13+04:00</updated>
+  <id>http://howtodevelop.github.io/</id>
+  <author>
+    <name><![CDATA[Natasha Ruby]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Spree Commerce: images become dark and over-contrasted after upload]]></title>
+    <link href="http://howtodevelop.github.io/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload/"/>
+    <updated>2013-11-15T21:23:00+04:00</updated>
+    <id>http://howtodevelop.github.io/blog/2013/11/15/spree-commerce-images-become-dark-and-overcontrasted-after-upload</id>
+    <content type="html"><![CDATA[<p>I just encountered this problem when uploading product images.
+The issue takes place even when I do <code>rake paperclip:refresh:thumbnails CLASS=Spree::Image</code>.</p>
+
+<p>So image become darker and overcontrasted as following:
+<img src="/assets/images/spree_darkened_image.jpg" alt="" /></p>
+
+<p>It happens because of the way ImageMagick works with RGB colorspace (in my case, the ImageMagick version is <code>8:6.7.7.10-5ubuntu2.1</code>)</p>
+
+<h2>So how to work around of this in Spree Commerce application</h2>
+
+<p>Just create a file <code>%app_root%/app/models/spree/image_decorator.rb</code> and place the following content into it:</p>
+
+<p>``` ruby
+module Spree
+  Image.class_eval do</p>
+
+<pre><code>Spree::Image.attachment_definitions[:attachment][:convert_options] =  { all: '-strip -auto-orient -colorspace sRGB' }
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>That&rsquo;s it! Image colors are no longer corrupt.</p>
+]]></content>
+  </entry>
+  
+</feed>
